@@ -1,0 +1,144 @@
+{
+  "name": "TikTok Streak Keeper 🔥",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 10 * * *"
+            }
+          ]
+        }
+      },
+      "name": "Daily at 10 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        300
+      ],
+      "id": "schedule-trigger"
+    },
+    {
+      "parameters": {
+        "command": "cd C:\\Users\\muaz\\tiktok-streak-bot && npm run send",
+        "sendBinaryData": false
+      },
+      "name": "Send TikTok DM",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "id": "execute-command"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.exitCode}}",
+              "operation": "equals",
+              "value2": "0"
+            }
+          ]
+        }
+      },
+      "name": "Check Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        690,
+        300
+      ],
+      "id": "if-success"
+    },
+    {
+      "parameters": {
+        "message": "✅ TikTok streak maintained! Message sent successfully 🔥",
+        "additionalFields": {}
+      },
+      "name": "Success Notification",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        910,
+        200
+      ],
+      "id": "success-notification",
+      "notes": "Replace this with actual notification (Discord, Telegram, Email, etc.)"
+    },
+    {
+      "parameters": {
+        "message": "❌ Failed to send TikTok DM! Check logs 💀",
+        "additionalFields": {}
+      },
+      "name": "Failure Notification",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        910,
+        400
+      ],
+      "id": "failure-notification",
+      "notes": "Replace this with actual notification (Discord, Telegram, Email, etc.)"
+    }
+  ],
+  "connections": {
+    "Daily at 10 AM": {
+      "main": [
+        [
+          {
+            "node": "Send TikTok DM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send TikTok DM": {
+      "main": [
+        [
+          {
+            "node": "Check Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Success": {
+      "main": [
+        [
+          {
+            "node": "Success Notification",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Failure Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-16T00:00:00.000Z",
+  "versionId": "1"
+}
+
+

@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+
+# Session data
+tiktok-cookies.json
+groups-data.json
+temp-group-config.json
+
+# Screenshots
+*-screenshot.png
+last-dm-screenshot.png
+last-group-screenshot.png
+error-screenshot.png
+
+# Debug files
+debug-*.png
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+nul
+*.tmp

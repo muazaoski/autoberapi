@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoBerapi</title>
+  <link rel="stylesheet" href="styles-v2.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <img src="../21d.ico" width="24" height="24" alt="Logo">
+          <h1>AutoBerapi</h1>
+        </div>
+        <div class="status" id="status">
+          <span class="status-dot"></span>
+          <span class="status-text">Ready</span>
+        </div>
+      </div>
+
+      <div class="groups-section">
+        <div class="groups-header">
+          <h3>Groups</h3>
+          <button class="btn-icon" id="addGroupBtn" title="Add Group">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 3V15M3 9H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="groups-list" id="groupsList">
+          <!-- Groups will be dynamically added here -->
+        </div>
+      </div>
+
+      <div class="credentials-section">
+        <h3>TikTok Account</h3>
+        <div class="form-group-compact">
+          <label>Username</label>
+          <input type="text" id="tiktokUsername" placeholder="your_username" autocomplete="off">
+        </div>
+        <div class="form-group-compact">
+          <label>Password</label>
+          <input type="password" id="tiktokPassword" placeholder="••••••••" autocomplete="off">
+        </div>
+        <button class="btn btn-secondary btn-block" id="saveCredsBtn">Save Credentials</button>
+      </div>
+
+      <div class="settings-section">
+        <button class="btn-settings" id="settingsBtn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 1V3M8 13V15M15 8H13M3 8H1M12.5 12.5L11 11M5 5L3.5 3.5M12.5 3.5L11 5M5 11L3.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Settings
+        </button>
+        <button class="btn-disclaimer" id="disclaimerBtn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M8 4V9M8 11V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Disclaimer & Usage
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="empty-state" id="emptyState">
+        <img src="../21d.ico" width="64" height="64" alt="Icon" style="opacity: 0.6;">
+        <h2>No Group Selected</h2>
+        <p>Create a group or select one from the sidebar to get started</p>
+      </div>
+
+      <div class="group-editor" id="groupEditor" style="display: none;">
+        <div class="editor-header">
+          <div class="editor-title">
+            <input type="text" id="groupName" placeholder="Group Name" class="group-name-input">
+            <button class="btn-icon btn-delete" id="deleteGroupBtn" title="Delete Group">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 4H14M6 4V2H10V4M3 4V14H13V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="schedule-section">
+          <h3>Schedule</h3>
+          <div class="schedule-controls">
+            <label class="checkbox-label">
+              <input type="checkbox" id="scheduleEnabled">
+              <span>Enable scheduled sending</span>
+            </label>
+            <div class="time-input-group" id="timeInputGroup" style="display: none;">
+              <label>Time:</label>
+              <input type="time" id="scheduleTime" value="10:00">
+            </div>
+          </div>
+        </div>
+
+        <div class="targets-section">
+          <div class="targets-header">
+            <h3>Targets</h3>
+            <button class="btn btn-secondary btn-sm" id="addTargetBtn">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              Add Target
+            </button>
+          </div>
+          <div class="targets-list" id="targetsList">
+            <!-- Targets will be dynamically added here -->
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-secondary" id="saveGroupBtn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M12 2H3C2.44772 2 2 2.44772 2 3V13C2 13.5523 2.44772 14 3 14H13C13.5523 14 14 13.5523 14 13V4L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Save Group
+          </button>
+          <button class="btn btn-primary" id="runGroupBtn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 2L12 8L4 14V2Z" fill="currentColor"/>
+            </svg>
+            Run Now
+          </button>
+        </div>
+      </div>
+
+      <!-- Console -->
+      <div class="console-panel">
+        <div class="console-header">
+          <h3>Console</h3>
+          <button class="btn-clear" id="clearBtn">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Clear
+          </button>
+        </div>
+        <div class="console" id="console">
+          <div class="console-line console-info">Welcome to AutoBerapi!</div>
+          <div class="console-line console-muted">Create groups and add targets to get started.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>⚙️ Settings</h2>
+        <button class="btn-icon" id="closeSettingsBtn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-content">
+        <div class="settings-group">
+          <h3>Automation Settings</h3>
+          <label class="checkbox-label-inline">
+            <input type="checkbox" id="headlessModeSetting" checked>
+            <span>Headless Mode (invisible browser)</span>
+          </label>
+          <p class="setting-description">Run browser in background without opening windows. Disable for first run to solve CAPTCHA.</p>
+        </div>
+
+        <div class="settings-group">
+          <h3>App Behavior</h3>
+          <label class="checkbox-label-inline">
+            <input type="checkbox" id="minimizeToTray" checked>
+            <span>Minimize to tray on close</span>
+          </label>
+          <p class="setting-description">Clicking X minimizes to system tray instead of closing. Schedules continue running.</p>
+
+          <label class="checkbox-label-inline">
+            <input type="checkbox" id="startMinimized">
+            <span>Start minimized to tray</span>
+          </label>
+          <p class="setting-description">App starts in system tray without showing main window.</p>
+        </div>
+
+        <div class="settings-group">
+          <h3>System Integration</h3>
+          <label class="checkbox-label-inline">
+            <input type="checkbox" id="openAtLogin">
+            <span>Start with Windows</span>
+          </label>
+          <p class="setting-description">Automatically launch app when Windows starts. Required for 24/7 scheduled messages.</p>
+        </div>
+
+        <div class="settings-group">
+          <h3>Performance</h3>
+          <label class="checkbox-label-inline">
+            <input type="checkbox" id="showNotifications" checked>
+            <span>Show notifications</span>
+          </label>
+          <p class="setting-description">Display desktop notifications when scheduled messages are sent.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-block" id="saveSettingsBtn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Disclaimer Modal -->
+  <div class="modal-overlay" id="disclaimerModal" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>⚠️ Important Disclaimers</h2>
+        <button class="btn-icon" id="closeModalBtn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 2L14 14M2 14L14 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-content">
+        <div class="disclaimer-section-content">
+          <h3>Legal Notice:</h3>
+          <ul>
+            <li>This tool is for <strong>educational purposes only</strong></li>
+            <li>Automating TikTok interactions <strong>violates TikTok's Terms of Service</strong></li>
+            <li>Your account may be <strong>banned or suspended</strong> for using automation</li>
+            <li>The author is <strong>not responsible</strong> for any account actions or consequences</li>
+            <li><strong>Use at your own risk</strong></li>
+          </ul>
+        </div>
+
+        <div class="disclaimer-section-content">
+          <h3>Ethical Use:</h3>
+          <p>This tool is intended for <strong>personal use only</strong> (maintaining legitimate streaks with friends)</p>
+          <p><strong>DO NOT</strong> use this for:</p>
+          <ul>
+            <li>Spam or harassment</li>
+            <li>Mass messaging strangers</li>
+            <li>Commercial purposes</li>
+            <li>Any activity that harms others or TikTok's platform</li>
+          </ul>
+        </div>
+
+        <div class="disclaimer-section-content">
+          <h3>How to Use:</h3>
+          <ol>
+            <li><strong>Configure Credentials:</strong> Enter your TikTok username and password in the sidebar</li>
+            <li><strong>First Run (IMPORTANT):</strong>
+              <ul>
+                <li><strong>Uncheck "Headless Mode"</strong> - Browser will be visible</li>
+                <li>Save credentials, create a group, add targets</li>
+                <li>Click "Run Now" - Browser opens</li>
+                <li><strong>Solve any CAPTCHA manually</strong> if prompted</li>
+                <li>Bot saves your session cookies automatically</li>
+                <li>Console shows: "✅ Cookies saved!"</li>
+              </ul>
+            </li>
+            <li><strong>Future Runs:</strong>
+              <ul>
+                <li><strong>Check "Headless Mode"</strong> back on</li>
+                <li>Bot uses saved cookies - no login needed!</li>
+                <li>No CAPTCHA, instant message sending</li>
+              </ul>
+            </li>
+            <li><strong>Schedule (Optional):</strong> Enable scheduled sending for automatic daily messages</li>
+            <li><strong>Minimize to Tray:</strong> Click X to minimize - app keeps running in background</li>
+          </ol>
+        </div>
+
+        <div class="disclaimer-section-content">
+          <h3>CAPTCHA Bypass:</h3>
+          <ul>
+            <li><strong>Stealth Mode:</strong> Bot uses advanced anti-detection to avoid CAPTCHAs</li>
+            <li><strong>Cookie Persistence:</strong> Login once, session saved for 2-4 weeks</li>
+            <li><strong>Session Reuse:</strong> Future runs skip login entirely - no CAPTCHA risk</li>
+            <li><strong>Manual Solve:</strong> If CAPTCHA appears, solve it once in visible mode</li>
+            <li><strong>Pro Tip:</strong> Always do first run with headless OFF, then turn it back ON</li>
+          </ul>
+        </div>
+
+        <div class="disclaimer-section-content warning">
+          <p><strong>By using this software, you acknowledge and accept these risks.</strong></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-block" id="acceptBtn">I Understand</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer-v2.js"></script>
+</body>
+</html>

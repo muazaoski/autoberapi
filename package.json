@@ -1,0 +1,65 @@
+{
+  "name": "autoberapi",
+  "version": "2.0.0",
+  "description": "AutoBerapi - Automated TikTok DM sender to maintain streaks",
+  "main": "main-v2.js",
+  "author": "Your Name",
+  "scripts": {
+    "send": "node send-dm.js",
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-cron": "^4.2.1",
+    "puppeteer": "^23.5.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.autoberapi.app",
+    "productName": "AutoBerapi",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main-v2.js",
+      "preload-v2.js",
+      "send-dm.js",
+      "send-dm-group.js",
+      "renderer/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    }
+  }
+}
