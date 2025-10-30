@@ -211,19 +211,6 @@
 
 ---
 
-## 📸 Screenshots
-
-### Main Interface
-![Main UI](screenshots/main-ui.png)
-
-### Settings Panel
-![Settings](screenshots/settings.png)
-
-### Disclaimer & Usage
-![Disclaimer](screenshots/disclaimer.png)
-
----
-
 ## 🔧 Troubleshooting
 
 ### CAPTCHA Keeps Appearing
